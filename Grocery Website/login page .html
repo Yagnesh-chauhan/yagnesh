@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Grocery Website</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --orange: #ff7800;
+            --black: #130f40;
+            --light-color: #666;
+            --box-shoadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+            --border: 2rem solid rgba(0, 0, 0, .1);
+            --outline: 1rem solid rgba(0, 0, 0, .1);
+            --outline-hover: 2rem solid var(--black);
+        }
+
+        * {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all .2s linear;
+        }
+
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #eee;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 9%;
+            background: #fff;
+            box-shadow: var(--box-shoadow);
+        }
+
+        .header .logo {
+            font-size: 2.5rem;
+            font-weight: bolder;
+            color: var(--black);
+        }
+
+        .header .logo i {
+            color: var(--orange);
+        }
+
+        .header .navbar a {
+            font-size: 1.7rem;
+            margin: 1rem;
+            color: var(--black);
+        }
+
+        .header .navbar a:hover {
+            color: var(--orange);
+        }
+
+        section {
+            padding: 10rem 9%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('https://img.freepik.com/premium-photo/supermarket-aisle-background-blur_488220-35004.jpg') no-repeat center center/cover;
+        }
+
+        .login-container {
+            background: #fff;
+            box-shadow: var(--box-shoadow);
+            border-radius: .5rem;
+            padding: 4rem 5rem;
+            width: 40rem;
+            text-align: center;
+        }
+
+        .login-container h3 {
+            font-size: 3rem;
+            color: var(--black);
+            margin-bottom: 2rem;
+        }
+
+        .login-container .box {
+            width: 100%;
+            margin: 1rem 0;
+            background: #eee;
+            border-radius: .5rem;
+            padding: 1.3rem;
+            font-size: 1.6rem;
+            color: var(--black);
+            text-transform: none;
+        }
+
+        .btn {
+            margin-top: 1.5rem;
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.7rem;
+            border-radius: .5rem;
+            border: .3rem solid var(--black);
+            color: var(--black);
+            cursor: pointer;
+            background: none;
+        }
+
+        .btn:hover {
+            background: var(--orange);
+            color: #fff;
+        }
+
+        .login-container p {
+            font-size: 1.4rem;
+            color: var(--light-color);
+            margin-top: 1rem;
+        }
+
+        .login-container p a {
+            color: var(--orange);
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 1.3rem;
+            margin-top: .5rem;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo"><i class="fas fa-shopping-basket"></i> grocery</a>
+       
+    </header>
+
+    <section>
+        <form id="loginForm" class="login-container">
+            <h3>Login Now</h3>
+            <input type="email" id="email" placeholder="Enter your email" class="box">
+            <div id="emailError" class="error"></div>
+
+            <input type="password" id="password" placeholder="Enter your password" class="box">
+            <div id="passwordError" class="error"></div>
+
+            <input type="submit" value="Login" class="btn">
+
+            <p>Forgot password? <a href="#">Click here</a></p>
+            <p>Don't have an account? <a href="Reg.html" >Create one</a></p>
+        </form>
+    </section>
+
+    <script>
+        // Login form validation
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const emailError = document.getElementById("emailError");
+            const passwordError = document.getElementById("passwordError");
+
+            emailError.textContent = "";
+            passwordError.textContent = "";
+
+            let valid = true;
+
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === "") {
+                emailError.textContent = "Email is required";
+                valid = false;
+            } else if (!emailPattern.test(email)) {
+                emailError.textContent = "Please enter a valid email address";
+                valid = false;
+            }
+
+            // Password validation
+            if (password === "") {
+                passwordError.textContent = "Password is required";
+                valid = false;
+            } else if (password.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters long";
+                valid = false;
+            }
+
+            if (valid) {
+                alert("Login successful!");
+                // Optionally redirect
+                 window.location.href = "index.html";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

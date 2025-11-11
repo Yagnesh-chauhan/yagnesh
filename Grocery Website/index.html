@@ -1,0 +1,946 @@
+<html>
+
+<head>
+    <title>Grocery Website</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <style>
+        :root {
+            --orange: #ff7800;
+            --black: #130f40;
+            --light-color: #666;
+            --box-shoadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+            --border: 2rem solid rgba(0, 0, 0, .1);
+            --outline: 1rem solid rgba(0, 0, 0, .1);
+            --outline-hover: 2rem solid var(--black);
+        }
+
+
+        * {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all .2s linear;
+
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow: auto;
+            scroll-behavior: smooth;
+            scroll-padding-top: 7rem;
+
+        }
+
+        body {
+            background-color: #eee;
+        }
+
+        section {
+            padding: 2rem 9%;
+        }
+
+        .heading {
+            text-align: center;
+            padding: 2rem;
+            padding-bottom: 3rem;
+            font-size: 3.5rem;
+            color: var(--black);
+        }
+
+        .heading span {
+            background: var(--orange);
+            color: #fff;
+            display: inline-block;
+            padding: .5rem 3rem;
+            clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
+        }
+
+        .btn {
+            margin-top: 1rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 1rem 1rem;
+            font-size: 1.7rem;
+            border-radius: .5rem;
+            border: .3rem solid var(--black);
+            color: var(--black);
+            cursor: pointer;
+            background: none;
+        }
+
+        .btn:hover {
+            background: var(--orange);
+            color: #fff;
+
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 9%;
+            background: #fff;
+            box-shadow: var(--box-shoadow);
+        }
+
+        .header .logo {
+            font-size: 2.5rem;
+            font-weight: bolder;
+            color: var(--black);
+        }
+
+        .header .logo i {
+            color: var(--orange);
+        }
+
+        .header .navbar a {
+            font-size: 1.7rem;
+            margin: 1rem;
+            color: var(--black);
+        }
+
+        .header .navbar a:hover {
+            color: var(--orange);
+        }
+
+        .header .icons div {
+            height: 4.5rem;
+            width: 4.5rem;
+            line-height: 4.5rem;
+            border-radius: .5rem;
+            background: #eee;
+            color: var(--black);
+            font-size: 2rem;
+            margin-right: .3rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .header .icons div:hover {
+            background: var(--orange);
+            color: #eee;
+        }
+
+        #menu-btn {
+            display: none;
+        }
+
+        .header .search-form {
+            position: absolute;
+            top: 110%;
+            right: 110%;
+            width: 70rem;
+            height: 5rem;
+            background: #fff;
+            border-radius: .5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--box-shoadow);
+        }
+
+        .header .search-form.active {
+            right: 2rem;
+            transition: .4s linear;
+        }
+
+        .header .search-form input {
+            height: 100%;
+            width: 100%;
+            background: none;
+            text-transform: none;
+            font-size: 1.6rem;
+            color: var(--black);
+            padding: 0 1.5rem;
+        }
+
+        .header .search-form label {
+            font-size: 2.2rem;
+            padding-right: 1.5rem;
+            color: var(--black);
+            cursor: pointer;
+        }
+
+        .header .search-form label:hover {
+            color: var(--orange);
+        }
+
+        .header .shopping-cart {
+            position: absolute;
+            top: 110%;
+            right: 110%;
+            padding: 1rem;
+            border-radius: .5rem;
+            box-shadow: var(--box-shoadow);
+            width: 35rem;
+            background-color: #fff;
+        }
+
+        .header .shopping-cart.active {
+            right: 2rem;
+            transition: .4s linear;
+        }
+
+        .header .shopping-cart .box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .header .shopping-cart .box img {
+            height: 10rem;
+
+        }
+
+        .header .shopping-cart .box .fa-trash {
+            font-size: 2rem;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            cursor: pointer;
+            color: var(--light-color);
+            transform: translateY(-50%);
+        }
+
+        .header .shopping-cart .box .fa-trash:hover {
+            color: var(--orange);
+        }
+
+        .header .shopping-cart .box .content h3 {
+            color: var(--black);
+            font-size: 1.7rem;
+            padding-bottom: 1rem;
+        }
+
+        .header .shopping-cart .box .content span {
+            color: var(--light-color);
+            font-size: 1.6rem;
+        }
+
+        .header .shopping-cart .box .content .Quantity {
+            padding-left: 1rem;
+        }
+
+        .header .shopping-cart .total {
+            font-size: 2.5rem;
+            padding: 1rem 0;
+            text-align: center;
+            color: var(--black);
+        }
+
+        .header .shopping-cart .btn {
+            display: block;
+            text-align: center;
+            margin: 1rem;
+        }
+
+        .header .login-form {
+            position: absolute;
+            top: 110%;
+            right: 110%;
+            width: 30rem;
+            height: 35rem;
+            box-shadow: var(--box-shoadow);
+            padding: 4rem;
+            border-radius: .5rem;
+            background: #fff;
+            text-align: center;
+        }
+
+        .header .login-form.active {
+            right: 2rem;
+            transition: .4s linear;
+        }
+
+        .header .login-form h3 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        .header .login-form .box {
+            width: 100%;
+            margin: .7rem 0;
+            background: #eee;
+            border-radius: .5rem;
+            padding: 1rem;
+            font-size: 1.6rem;
+            color: var(--black);
+            text-transform: none;
+        }
+
+        .header .login-form p {
+            font-size: 1.4rem;
+            padding: .5rem;
+            color: var(--light-color);
+        }
+
+        .header .login-form p a {
+            color: var(--orange);
+            text-decoration: underline;
+        }
+
+        .Home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url(../image/realistic-blur-background-store-department-store-supermarket-grocery-store-ai-generated-image_532963-7090.jpg) no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding-top: 17rem;
+            padding-bottom: 10rem;
+        }
+
+        .Home .content {
+            text-align: center;
+            width: 60rem;
+        }
+
+        .Home .content h3 {
+            color: var(--black);
+            font-size: 3rem;
+        }
+
+
+        .Home .content h3 span {
+            color: var(--orange);
+        }
+
+        .Home .content p {
+            color: var(--light-color);
+            font-size: 1.7rem;
+            padding: 1rem 0;
+            line-height: 1.8;
+        }
+
+        .Featurse .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+            gap: 1.5rem;
+        }
+
+        .Featurse .box-container .box {
+            padding: 3rem 2rem;
+            background: #fff;
+            outline: var(--outline);
+            outline-offset: -1rem;
+            text-align: center;
+            box-shadow: var(--box-shoadow);
+        }
+
+        .Featurse .box-container .box:hover {
+            outline: var(--outline-hover);
+        }
+
+        .Featurse .box-container .box img {
+            margin: 1rem 0;
+            height: 15rem;
+        }
+
+        .Featurse .box-container .box h3 {
+            font-size: 2.5rem;
+            line-height: 1.0;
+            color: var(--black);
+        }
+
+        .Featurse .box-container .box p {
+            font-size: 1.5rem;
+            line-height: 1.0;
+            color: var(--light-color);
+            padding: 1rem 0;
+        }
+
+        .products .products-slider {
+            padding: 1rem;
+        }
+
+        .products .products-slider:first-child {
+            margin-bottom: 2rem;
+        }
+
+        .products .products-slider .box {
+            background: #fff;
+            border-radius: .5rem;
+            text-align: center;
+            padding: 3rem 2rem;
+            outline-offset: -1rem;
+            outline: var(--outline);
+            box-shadow: var(--box-shoadow);
+            transition: .2s linear;
+        }
+
+        .products .products-slider .box:hover {
+            border: 10px solid cadetblue;
+        }
+
+        .products .products-slider .box img {
+            height: 20rem;
+        }
+
+        .products .products-slider .box h3 {
+            font-size: 2.5rem;
+            color: var(--black);
+        }
+
+        .products .products-slider .box .price {
+            font-size: 2rem;
+            color: var(--light-color);
+            padding: 2rem 0;
+        }
+
+        .products .products-slider .box .stars {
+            font-size: 1.5rem;
+            color: var(--orange);
+            padding: 2rem 0;
+        }
+
+        .catageries .box-container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30rem,1fr));
+            gap: 1.5rem;
+        }
+
+        .catageries .box-container .box{
+            padding: 3rem 2rem;
+            border-radius: .5rem;
+            background: #fff;
+            box-shadow: var(--box-shoadow);
+            outline: var(--outline);
+            outline-offset: -1rem;
+            text-align: center;
+        }
+
+        .catageries .box-container .box img{
+            margin: 1rem 0;
+            height: 15rem;
+        }
+
+         .catageries .box-container .box h3{
+          font-size: 2rem;
+          color: var(--black);
+          line-height: 1.8;
+        }
+
+         .catageries .box-container .box p{
+          font-size: 1.7rem;
+          color: var(--light-color);
+          line-height: 1.8;
+          padding: 1rem 0;
+        }
+
+        .Review .Review-slider{
+            padding: 1rem;
+        }
+
+        .Review .Review-slider .box{
+            background: #fff;
+            border-radius: .5rem;
+            text-align: center;
+            padding: 3rem 2rem;
+            outline-offset: -1rem;
+            outline: var(--outline);
+            box-shadow: var(--box-shoadow);
+            transition: .2s linear;
+        }
+
+        .Review .Review-slider .box img{
+            height: 10rem;
+            width: 10rem;
+            border-radius: 50%;
+        }
+
+        .Review .Review-slider .box p{
+            padding: 1rem 0;
+            line-height: 1.8;
+            color: var(--light-color);
+            font-size: 1.5rem;
+        }
+
+         .Review .Review-slider .box h3{
+            padding-bottom: .5rem;
+            color: var(--black);
+            font-size: 2.2rem;
+        }
+
+        .Review .Review-slider .box .stars i{
+            color: var(--orange);
+            font-size: 1.7rem;
+        }
+
+        .footer{
+            background: #fff;
+        }
+
+        .footer .box-container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(25rem,1fr));
+            gap: 3.5rem;
+        }
+
+        .footer .box-container .box h3{
+            font-size: 2.5rem;
+            color:var(--black);
+            padding: 1rem 0;
+        }
+
+        .footer .box-container .box h3 i{
+            color: var(--orange);
+        }
+
+         .footer .box-container .box .links{
+            display: block;
+            font-size: 1.5rem;
+            color:var(--light-color);
+            padding: 1rem 0;
+        }
+
+        .footer .box-container .box .links i{
+            color: var(--orange);
+            padding-right: .5rem;
+        }
+
+        .footer .box-container .box p{
+            color: var(--orange);
+            padding-right: .5rem;
+        }
+
+        .footer .box-container .box .links:hover{
+           padding-right: 2rem;
+        }
+
+         .footer .box-container .box p{
+           line-height: 1.8;
+            font-size: 1.5rem;
+            color:var(--light-color);
+            padding: 1rem 0;
+        }
+
+        .footer .box-container .box .share a{
+            height: 4rem;
+            width: 4rem;
+            line-height: 4rem;
+            border-radius: .5rem;
+            font-size: 2rem;
+            color: var(--black);
+            margin-left: .2rem;
+            background: #eee;
+            text-align: center;
+        }
+
+        .footer .box-container .box .share a:hover{
+            background: var(--orange);
+            color: #fff;
+        }
+
+        .footer .box-container .box .email{
+            width: 100%;
+            margin: .7rem 0;
+            padding: 1rem;
+            border-radius: .5rem;
+            background: #eee;
+            font-size: 1.6rem;
+            color: var(--black);
+            text-transform: none;
+        }
+
+        .footer .box-container .box .payment-img{
+            margin-top: 2rem;
+            height: 15rem;
+            margin-right: 5rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="#" class="logo"> <i class="fas fa-shopping-basket"></i> </a>
+
+        <nav class="navbar">
+            <a href="#Home">Home</a>
+            <a href="#Featurse">Featurse</a>
+            <a href="#products">Products</a>
+            <a href="#catageries">catageries</a>
+            <a href="#Review">Review</a>
+        </nav>
+
+        <div class="icons">
+            <div class="fas fa-bars" id="menu-btn"></div>
+            <div class="fas fa-search" id="search-btn"></div>
+            <!-- <a href="cart.html"><div class="fas fa-shopping-cart" id="cart-btn"></div></a> -->
+            <div class="fas fa-shopping-cart" id="cart-btn"></div>
+            <div class="fas fa-user" id="login-btn"></div>
+        </div>
+
+        <form action="" class="search-form">
+            <input type="search" id="search-box" placeholder="search here....">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+
+        <div class="shopping-cart">
+            <div class="box">
+                <i class="fas fa-trash"></i>
+                <img src="D:\Grocery Website\apple-fruit-transparent-apples-jam-png-13.png" alt="">
+                <div class="content">
+                    <h3>Apple</h3>
+                    <span class="price">$4.99/-</span>
+                    <span class="Quantity">qty : 1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-trash"></i>
+                <img src="D:\Grocery Website\untitled-1-500x500.webp" alt="">
+                <div class="content">
+                    <h3>Watermelon</h3>
+                    <span class="price">$5.99/-</span>
+                    <span class="Quantity">qty : 1</span>
+
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-trash"></i>
+                <img src="D:\Grocery Website\houney-variety.jpg" alt="">
+                <div class="content">
+                    <h3>Mengo</h3>
+                    <span class="price">$7.99/-</span>
+                    <span class="Quantity">qty : 1</span>
+
+                </div>
+            </div>
+            <div class="total"> total : $19.69/-</div>
+            <a href="#" class="btn">Checkout</a>
+        </div>
+
+        <form action="" class="login-form">
+            <h3>login now</h3>
+            <input type="email" placeholder="your email" class="box">
+            <input type="password" placeholder="your password" class="box">
+            <p>forget password <a href="#">click here</a></p>
+            <p>Don't have an account <a href="#">create now</a></p>
+            <input type="submit" value="login now" class="btn">
+        </form>
+    </header>
+
+    <section class="Home" id="Home">
+
+        <div class="content">
+            <h3>fresh and <span>organic</span>products for your</span></h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliqman libero nostrum
+                veniam facere tempore nisi.</p>
+            <a href="#" class="btn">shop now</a>
+        </div>
+    </section>
+
+    <section class="Featurse" id="Featurse">
+
+        <h1 class="heading"> our <span>Featurse</span></h1>
+
+        <div class="box-container">
+
+            <div class="box">
+                <img src="../image/feature-img-1-removebg-preview.png" alt="" style="margin-left: 115px;">
+                <h3>fresh and organic</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+                <a href="#" class="btn">read more</a>
+            </div>
+
+            <div class="box">
+                <img src="../image/feature-img-2-removebg-preview.png" alt="" style="margin-left: 115px;">
+                <h3>free delivery</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+                <a href="#" class="btn">read more</a>
+            </div>
+
+            <div class="box">
+                <img src="../image/feature-img-3-removebg-preview.png" alt="" style="margin-left: 115px;">
+                <h3>easy payment</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+                <a href="#" class="btn">read more</a>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="products" id="products" style="height: 650px;">
+        <h1 class="heading"> our <span>products</span></h1>
+
+        <div class="swiper products-slider">
+            <div class="swiper-wrapper">
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-1.1.png" alt="">
+                    <h3>fresh orange</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-2.png" alt="">
+                    <h3>fresh Banana</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-3.3.png" alt="">
+                    <h3>fresh Mango</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-4.png" alt="">
+                    <h3>fresh meat</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-5.png" alt="">
+                    <h3>fresh potato</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-6.png" alt="">
+                    <h3>fresh avocado</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-7.png" alt="">
+                    <h3>fresh carrot</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+                <div class="swiper-slide box">
+                    <img src="../image/product-8.png" alt="">
+                    <h3>green lemon</h3>
+                    <div class="price"> $4.99/--10.99/-</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <a href="#" class="btn">add to cart</a>
+                </div>
+
+            </div>
+        </div>
+    </section><br><br><br><br><br><br><br><br>
+
+
+    <section class="catageries" id="catageries">
+
+        <h1 class="heading"> product <span>catageries</span></h1>
+
+        <div class="box-container">
+
+             <div class="box">
+            <img src="../image/cat-1.png" alt="">
+            <h3>vegitables</h3>
+            <p>upto 45% off</p>
+            <a href="#" class="btn">shop now</a>
+        </div>
+
+        <div class="box">
+            <img src="../image/cat-2.png" alt="">
+            <h3>fresh fruit</h3>
+            <p>upto 45% off</p>
+            <a href="#" class="btn">shop now</a>
+        </div>
+
+        <div class="box">
+            <img src="../image/cat-3.png" alt="">
+            <h3>dairy product</h3>
+            <p>upto 45% off</p>
+            <a href="#" class="btn">shop now</a>
+        </div>
+
+        <div class="box">
+            <img src="../image/cat-4.4.png" alt="">
+            <h3>fresh meat</h3>
+            <p>upto 45% off</p>
+            <a href="#" class="btn">shop now</a>
+        </div>
+
+        </div>
+
+       
+    </section>
+
+
+
+    <section class="Review" id="Review">
+
+        <h1 class="heading"> customer <span>review</span></h1>
+
+        <div class="Review-slider">
+
+            <div class="wrapper">
+
+                <div class="box">
+                    <img src="../image/pic-1.png" alt="" style="margin-left: 550px;">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                        Provident, eveniet odit laboriosam praesentium at aspernatur quod in aliquid dolor</p>
+                    <h3>john deo</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="../image/pic-2.png" alt="" style="margin-left: 550px;">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                        Provident, eveniet odit laboriosam praesentium at aspernatur quod in aliquid dolor</p>
+                    <h3>john deo</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="../image/pic-3.png" alt="" style="margin-left: 550px;">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                        Provident, eveniet odit laboriosam praesentium at aspernatur quod in aliquid dolor</p>
+                    <h3>john deo</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3>groco <i class="fas fa-shopping-basket"></i> </h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe.</p>
+                <div class="share">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
+                </div>
+
+
+            </div>
+
+             <div class="box">
+                <h3>contact info</h3>
+                <a href="#" class="links"><i class="fas fa-phone"></i> +123-456-7890</a>
+                <a href="#" class="links"><i class="fas fa-phone"></i> +111-222-3333</a>
+                <a href="#" class="links"><i class="fas fa-envelope"></i> yagneshchauhan@gmail.com</a>
+                <a href="#" class="links"><i class="fas fa-map-marker-alt"></i> Rajkot ,Gujrat - 360002</a>
+            </div>
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="#" class="links"><i class="fas fa-arrow-right"></i> Home </a>
+                <a href="#" class="links"><i class="fas fa-arrow-right"></i> Featurse </a>
+                <a href="#" class="links"><i class="fas fa-arrow-right"></i> products </a>
+                <a href="#" class="links"><i class="fas fa-arrow-right"></i> catageries </a>
+                <a href="#" class="links"><i class="fas fa-arrow-right"></i> Review </a>
+            </div>
+
+            <div class="box">
+                <h3>newsletter</h3>
+                <p>subscribe for latest update</p>
+                <input type="email" placeholder="your email" class="email">
+                <input type="submit" value="subscribe" class="btn">
+                <img src="../image/pyment.png" class="payment-img" alt="">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+
+</html>

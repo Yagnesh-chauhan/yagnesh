@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Grocery Website</title>
+
+  <!-- External Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Reuse the same style as Home Page -->
+  <style>
+    :root {
+      --orange: #ff7800;
+      --black: #130f40;
+      --light-color: #666;
+      --box-shoadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+      --outline: 1rem solid rgba(0, 0, 0, .1);
+      --outline-hover: 2rem solid var(--black);
+    }
+    * {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      outline: none; border: none;
+      text-decoration: none;
+      text-transform: capitalize;
+      transition: all .2s linear;
+    }
+    body {
+      background-color: #eee;
+    }
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem 9%;
+      background: #fff; box-shadow: var(--box-shoadow);
+    }
+    .header .logo {
+      font-size: 2.5rem; font-weight: bolder; color: var(--black);
+    }
+    .header .logo i { color: var(--orange); }
+    .header .navbar a {
+      font-size: 1.7rem; margin: 1rem; color: var(--black);
+    }
+    .header .navbar a:hover { color: var(--orange); }
+
+    .heading {
+      text-align: center;
+      padding: 10rem 2rem 3rem;
+      font-size: 3rem;
+      color: var(--black);
+    }
+    .heading span {
+      background: var(--orange);
+      color: #fff;
+      display: inline-block;
+      padding: .5rem 3rem;
+      clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
+    }
+
+    /* Registration Form */
+    .register-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('https://img.freepik.com/free-photo/supermarket-blur-background_74190-10289.jpg') no-repeat center/cover;
+      padding-top: 10rem;
+    }
+
+    .register-box {
+      background: #fff;
+      border-radius: .5rem;
+      box-shadow: var(--box-shoadow);
+      padding: 3rem 4rem;
+      width: 40rem;
+      text-align: center;
+      outline: var(--outline);
+      outline-offset: -1rem;
+    }
+
+    .register-box h2 {
+      color: var(--black);
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .register-box .box {
+      width: 100%;
+      margin: .8rem 0;
+      background: #eee;
+      border-radius: .5rem;
+      padding: 1rem;
+      font-size: 1.6rem;
+      color: var(--black);
+      text-transform: none;
+    }
+
+    .btn {
+      margin-top: 1.5rem;
+      display: inline-block;
+      padding: 1rem 3rem;
+      font-size: 1.7rem;
+      border-radius: .5rem;
+      border: .3rem solid var(--black);
+      color: var(--black);
+      background: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .register-box p {
+      font-size: 1.4rem;
+      color: var(--light-color);
+      margin-top: 1rem;
+    }
+    .register-box p a {
+      color: var(--orange);
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 1.4rem;
+      margin-top: .5rem;
+      text-transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="logo"><i class="fas fa-shopping-basket"></i> Grocery</a>
+   
+  </header>
+
+  <!-- Registration Section -->
+  <section class="register-section">
+    <form class="register-box" id="registerForm">
+      <h2>Register Now</h2>
+      <input type="text" id="fullname" class="box" placeholder="Full Name">
+      <div class="error" id="nameError"></div>
+
+      <input type="email" id="email" class="box" placeholder="Email Address">
+      <div class="error" id="emailError"></div>
+
+      <input type="password" id="password" class="box" placeholder="Password">
+      <div class="error" id="passwordError"></div>
+
+      <input type="password" id="confirmPassword" class="box" placeholder="Confirm Password">
+      <div class="error" id="confirmError"></div>
+
+      <button type="submit" class="btn">Create Account</button>
+
+      <p>Already have an account? <a href="login page .html">Login here</a></p>
+    </form>
+  </section>
+
+  <!-- JavaScript Validation -->
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Input Fields
+      const name = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Error Fields
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmError = document.getElementById("confirmError");
+
+      // Reset Errors
+      nameError.textContent = "";
+      emailError.textContent = "";
+      passwordError.textContent = "";
+      confirmError.textContent = "";
+
+      let valid = true;
+
+      // Name Validation
+      if (name.length < 3) {
+        nameError.textContent = "Name must be at least 3 characters long.";
+        valid = false;
+      }
+
+      // Email Validation
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        emailError.textContent = "Enter a valid email address.";
+        valid = false;
+      }
+
+      // Password Validation
+      if (password.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters.";
+        valid = false;
+      }
+
+      // Confirm Password Validation
+      if (password !== confirmPassword) {
+        confirmError.textContent = "Passwords do not match.";
+        valid = false;
+      }
+
+      // Final Submission
+      if (valid) {
+        alert("Registration Successful!");
+        this.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
